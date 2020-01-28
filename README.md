@@ -1,23 +1,28 @@
-# {YOUR BOT NAME HERE}
-<https://t.me/{BOT_ID}>
+# {To GO BOT}
+<http://t.me/place_near_you_bot>
 
 {ONE LINE BOT DESCRIPTION HERE} 
 
-* {Participant 1 Name}
-* {Participant 2 Name}
-* {Participant 3 Name}
+* {John James Benitez}
+* {Sarit Merkel}
+* {KOBE BRYANT}
 
 {OPTIONAL: MORE PROJECT INFO HERE}
 
 ## Screenshots
 
-![SCREESHOT DECSRIPTION](screenshots/shopping-list-bot-1.png)
+![SCREESHOT DECSRIPTION](screenshots/screen_shot_BOT.jpeg)
 
 ## How to Run This Bot
+COMMAND:
+    /start - START THE BOT AND IMMEDIATELY ASK FOR YOUR LOCATION
+    /places - SHOWS PLACES YOU CHOSE (TO GO LIST) 
 ### Prerequisites
 * Python 3.7 or 3.8
 * pipenv
-* {ADD MORE DEPENDENCIES HERE - FOR EXAMPLE MONGODB OR ANYTHING ELSE}
+* pymongo
+* requests
+* logging
 
 ### Setup
 * Clone this repo from github
