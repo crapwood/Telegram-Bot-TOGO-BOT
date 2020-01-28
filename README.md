@@ -1,5 +1,5 @@
 # {YOUR BOT NAME HERE}
-<https://t.me/{BOT_ID}>
+<http://t.me/place_near_you_bot>
 
 {ONE LINE BOT DESCRIPTION HERE} 
 
