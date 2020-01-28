@@ -1,11 +1,11 @@
 # {YOUR BOT NAME HERE}
 <http://t.me/place_near_you_bot>
 
-{ONE LINE BOT DESCRIPTION HERE} 
+{This BOT Organizes your daily tasks} 
 
-* {Participant 1 Name}
-* {Participant 2 Name}
-* {Participant 3 Name}
+* {/start}
+* {/places}
+* {/follow}
 
 {OPTIONAL: MORE PROJECT INFO HERE}
 
@@ -17,7 +17,7 @@
 ### Prerequisites
 * Python 3.7 or 3.8
 * pipenv
-* {ADD MORE DEPENDENCIES HERE - FOR EXAMPLE MONGODB OR ANYTHING ELSE}
+* MongoDB
 
 ### Setup
 * Clone this repo from github
