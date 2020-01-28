@@ -33,7 +33,7 @@ def start(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     logger.info(f"> Start chat #{chat_id}")
     context.bot.send_message(chat_id=chat_id, text="Welcome to Find_places_near_ME")
-    context.bot.send_message(chat_id=chat_id, text="Send your location")
+    context.bot.send_message(chat_id=chat_id, text="Please send your location")
 
 
 def respond(update: Update, context: CallbackContext):
@@ -42,9 +42,8 @@ def respond(update: Update, context: CallbackContext):
     what_to_look_for = update.message.text
     params = {
         "location": f"{lati},{long}",
-        "radius": 5000,
-        # "type": what_to_look_for,
         "keyword": what_to_look_for,
+        "rankby": "distance",
         "key": secrets.GOOGLE_API_KEY
     }
     r = requests.get(base_url_nearby, params)
@@ -70,32 +69,57 @@ def respond(update: Update, context: CallbackContext):
 
 def locate(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
+    user_id = update.effective_user
     global lati, long
     lati = update.message.location.latitude
     long = update.message.location.longitude
-    context.bot.send_message(chat_id=chat_id, text="SUCCESS!!!")
-    context.bot.send_message(chat_id=chat_id, text=f"You are currently in Ramla\nWhat are you looking for?")
+    context.bot.send_message(chat_id=chat_id, text=f"SUCCESS!!!")
+    context.bot.send_message(chat_id=chat_id,
+                             text=f"{user_id['first_name']} {user_id['last_name']} you are currently in Ramla\n\nWhat are you looking for?")
 
 
 def menu_actions(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     query = update.callback_query
-    global result
-    place_name = f"{result['results'][int(query.data)]['name']}"
-    address = f"{result['results'][int(query.data)]['vicinity']}"
+    if query.data.isdigit():
+        global result
+        place_name = f"{result['results'][int(query.data)]['name']}"
+        address = f"{result['results'][int(query.data)]['vicinity']}"
 
-    person = {
-        "chat_id": chat_id,
-        "places": [{f'{what_to_look_for}': {"name": place_name, "address": address}}]
-    }
-    changes = {f'{what_to_look_for}': {"name": place_name, "address": address}}
-    pprint(person)
-    model.add_user_to_db(person, changes)
-    context.bot.send_message(chat_id=chat_id, text="SUCCESS!!!", reply_markup=None)
+        person = {
+            "chat_id": chat_id,
+            "places": {f'{what_to_look_for}': {"name": place_name, "address": address}}
+        }
+        changes = {f'{what_to_look_for}': {"name": place_name, "address": address}}
+        pprint(person)
+        model.add_user_to_db(person, changes)
+        context.bot.send_message(chat_id=chat_id, text="SUCCESS!!!", reply_markup=None)
+    else:
+        model.remove_place_from_db(chat_id, query.data)
+        results = model.get_places_from_db(chat_id)
+        custom_keyboard = []
+        for place in results:
+            custom_keyboard.append([InlineKeyboardButton(f"{place[0]}, {place[1]}", callback_data=place[1])])
+        print(custom_keyboard)
+        if len(custom_keyboard) > 0:
+            reply_markup = InlineKeyboardMarkup(custom_keyboard)
+        else:
+            reply_markup = ""
+        context.bot.send_message(chat_id=chat_id, text="SUCCESSFULLY REMOVE!!!", reply_markup=reply_markup)
 
 
-def show_places(args):
-    pass
+def show_places(update: Update, context: CallbackContext):
+    chat_id = update.effective_chat.id
+    results = model.get_places_from_db(chat_id)
+    print(results)
+    custom_keyboard = []
+    index = 0
+    for place in results:
+        place_remove = f"remove-{index}"
+        custom_keyboard.append([InlineKeyboardButton(f"{place[0]}, {place[1]}", callback_data=place_remove)])
+        index += 1
+    reply_markup = InlineKeyboardMarkup(custom_keyboard)
+    context.bot.send_message(chat_id=chat_id, text="OK", reply_markup=reply_markup)
 
 
 def main():
