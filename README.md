@@ -1,4 +1,4 @@
-# {YOUR BOT NAME HERE}
+# {To Go BOT}
 <http://t.me/place_near_you_bot>
 
 {This BOT Organizes your daily tasks} 
