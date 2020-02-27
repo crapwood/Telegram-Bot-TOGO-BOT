@@ -1,11 +1,19 @@
-# {To GO BOT}
+
+# {To Go BOT}
+
 <http://t.me/place_near_you_bot>
 
-{ONE LINE BOT DESCRIPTION HERE} 
+{This BOT Organizes your daily tasks} 
 
+<<<<<<< HEAD
 * {John James Benitez}
 * {Sarit Merkel}
 * {KOBE BRYANT}
+=======
+* {/start}
+* {/places}
+* {/follow}
+
 
 {OPTIONAL: MORE PROJECT INFO HERE}
 
@@ -20,9 +28,13 @@ COMMAND:
 ### Prerequisites
 * Python 3.7 or 3.8
 * pipenv
+<<<<<<< HEAD
 * pymongo
 * requests
 * logging
+=======
+* MongoDB
+>>>>>>> 467c470405255b07e3b441fd1e07f641f103716e
 
 ### Setup
 * Clone this repo from github
